@@ -29,6 +29,6 @@
     "src/**/*.vue",
     "src/manifest.tst.ts"
   ],
-  "exclude": ["./src/background.ts"],
+  "exclude": ["src/background/background.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

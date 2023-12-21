@@ -35,7 +35,7 @@ const manifest = {
   },
   permissions: ['storage', 'activeTab', 'scripting', 'tabs'],
   background: {
-    service_worker: './background.ts',
+    service_worker: './background/background.ts',
     type: 'module'
   },
   // content_scripts: [
