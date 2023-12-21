@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "dev": "npm run ws & npm run watch",
+    "build": "vue-tsc && cross-env VITE_APP_ENV='prod' vite build",
+    "build:dev": "vue-tsc && cross-env VITE_APP_ENV='dev'  vite build",
     "ws": "node ws",
-    "watch": "nodemon -e ts,js,vue,html --exec \"npm run build\" -w vite.config.ts -w src/",
-    "preview": "vite preview",
-    "debug": "npm run ws & npm run watch"
+    "watch": "nodemon -e ts,js,vue,html --exec \"npm run build:dev\" -w vite.config.ts -w src/",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@metamask/post-message-stream": "^6.1.1",
@@ -26,6 +26,7 @@
     "@typescript-eslint/parser": "^5.55.0",
     "@vitejs/plugin-vue": "^4.1.0",
     "chokidar": "^3.5.3",
+    "cross-env": "^7.0.3",
     "eslint": "^8.36.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.7.0",

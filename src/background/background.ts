@@ -1,7 +1,11 @@
 import initWebSocket from './socket';
 import actionFun from "./action";
+import isDev from '../utils/isDev';
 
-initWebSocket();
+if(isDev){
+  initWebSocket();
+}
+
 function sendMsgToContentScript(message, callback?: Function) {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     console.log('tabs', tabs)

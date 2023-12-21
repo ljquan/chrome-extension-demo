@@ -1,20 +1,24 @@
 import {JSONparse} from '../utils/json';
 import {pageMap} from "./action";
 
-let socket = new WebSocket("ws://localhost:8080");
 let url = "ws://localhost:8080";
+let tryCount = 0;
+let timer: string | number | NodeJS.Timeout | undefined;
 function handleOpen() {
+  tryCount = 0;
   console.log('WebSocket opened');
 }
 
 function handleClose() {
   console.log('WebSocket closed');
-  setTimeout(initWebSocket, 5000); // 5秒后尝试重新连接
+  clearTimeout(timer);
+  timer = setTimeout(initWebSocket, 6E3); // 6秒后尝试重新连接
 }
 
 function handleError() {
   console.error('WebSocket error');
-  setTimeout(initWebSocket, 5000); // 出现错误，5秒后尝试重新连接
+  clearTimeout(timer);
+  timer = setTimeout(initWebSocket, 6E3); // 出现错误，6秒后尝试重新连接
 }
 
 
@@ -40,14 +44,21 @@ function handleMessage (event: any) {
   }
 };
 
-
-
+// 确保socket是单例
+let socket;
 function initWebSocket() {
+  try{
+    tryCount++;
+    if(tryCount > 20){
+      // 超过 2分钟就不再重试了
+      return;
+    }
     socket = new WebSocket(url);
     socket.onopen = handleOpen;
     socket.onclose = handleClose;
     socket.onmessage = handleMessage;
     socket.onerror = handleError;
+  }catch(e){}
 }
 
 export default initWebSocket;
